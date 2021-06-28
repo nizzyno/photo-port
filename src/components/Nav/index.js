@@ -36,10 +36,12 @@ function Nav(props) {
               About me
             </a>
           </li>
+          {/* conditional render styling if contact */}
           <li className={`mx-2 ${contactSelected && 'navActive'}`}>
             <span onClick={() => setContactSelected(true)}>Contact</span>
           </li>
           {categories.map((category) => (
+            // conditional render styling if not contact and a category instead
             <li
               className={`mx-1 ${
                 currentCategory.name === category.name &&
