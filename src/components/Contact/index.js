@@ -8,31 +8,33 @@ function ContactForm() {
     message: '',
   });
 
+  // hook to handle error state
   const [errorMessage, setErrorMessage] = useState('');
+  // destructure formState object into it's name properties
   const { name, email, message } = formState;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!errorMessage) {
-      setFormState({ [e.target.name]: e.target.value });
-      console.log('Form', formState);
-    }
-  };
-
-  const handleChange = (e) => {
-    if (e.target.name === 'email') {
-      const isValid = validateEmail(e.target.value);
+  const handleChange = (evt) => {
+    if (evt.target.name === 'email') {
+      const isValid = validateEmail(evt.target.value);
       if (!isValid) {
         setErrorMessage('Your email is invalid.');
       } else {
         setErrorMessage('');
       }
     } else {
-      if (!e.target.value.length) {
-        setErrorMessage(`${e.target.name} is required.`);
+      if (!evt.target.value.length) {
+        setErrorMessage(`${evt.target.name} is required.`);
       } else {
         setErrorMessage('');
       }
+    }
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    if (!errorMessage) {
+      setFormState({ [evt.target.name]: evt.target.value });
+      console.log(formState);
     }
   };
 
@@ -50,6 +52,7 @@ function ContactForm() {
           <input
             type="text"
             name="name"
+            placeholder="Preferred name"
             defaultValue={name}
             onBlur={handleChange}
           />
@@ -59,6 +62,7 @@ function ContactForm() {
           <input
             type="email"
             name="email"
+            placeholder="Your email"
             defaultValue={email}
             onBlur={handleChange}
           />
@@ -68,6 +72,7 @@ function ContactForm() {
           <textarea
             name="message"
             rows="5"
+            placeholder="Your message"
             defaultValue={message}
             onBlur={handleChange}
           />
